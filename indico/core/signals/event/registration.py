@@ -20,6 +20,10 @@ from blinker import Namespace
 
 _signals = Namespace()
 
+registration_modified = _signals.signal('registration_modified', """
+Called when the registration is modified.  The `sender` is the
+registration; the change is passed in the `change` kwarg.
+""")
 
 registration_state_updated = _signals.signal('registration-state-updated', """
 Called when the state of registration changes.  The `sender` is the
@@ -33,5 +37,10 @@ Called when a registration is removed.  The `sender` is the registration.
 
 registration_form_created = _signals.signal('registration-form-created', """
 Called when a new registration form is created.  The `sender` is the
+`RegistrationForm` object.
+""")
+
+registration_form_deleted = _signals.signal('registration-form-deleted', """
+Called when a registration form is removed.  The `sender` is the
 `RegistrationForm` object.
 """)
