@@ -92,7 +92,7 @@
 
 <form action="" method="post" enctype="multipart/form-data">
     ${ form.csrf_token() }
-    <table width="95%" cellpadding="0" cellspacing="0" border="0" align="center">
+    <table id="modify-room" width="95%" cellpadding="0" cellspacing="0" border="0" align="center">
         <tr>
             <td class="formTitle">
                 <a href="${ url_for('rooms_admin.roomBooking-adminLocation', location) }">
