@@ -16,6 +16,8 @@
 
 from __future__ import unicode_literals
 
+from sqlalchemy.orm import joinedload
+
 from indico.modules.designer.models.templates import DesignerTemplate
 from indico.modules.designer.placeholders import GROUP_TITLES
 from indico.modules.events.models.events import Event
@@ -38,3 +40,13 @@ def get_all_templates(obj):
 def get_inherited_templates(obj):
     """Get all templates inherited by a given event/category"""
     return get_all_templates(obj) - set(obj.designer_templates)
+
+
+def get_default_template_on_category(obj):
+    if isinstance(obj, Event):
+        return None
+    if obj.default_ticket_template:
+        return obj.default_ticket_template
+    parent_chain = reversed(obj.parent_chain_query.options(joinedload('default_ticket_template')).all())
+    return next((category.default_ticket_template for
+                 category in parent_chain if category.default_ticket_template), None)
