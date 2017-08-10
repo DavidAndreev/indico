@@ -158,6 +158,8 @@ class CloneTemplateMixin(TargetFromURLMixin):
 
     def _checkParams(self):
         self.template = DesignerTemplate.get_one(request.view_args['template_id'])
+        if not self.template.clonable:
+            raise Forbidden
 
     def _process(self):
         title = "{} (copy)".format(self.template.title)
